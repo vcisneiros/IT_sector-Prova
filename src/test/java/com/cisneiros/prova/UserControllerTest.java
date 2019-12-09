@@ -14,11 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,11 +49,12 @@ class UserControllerTest {
 	@Test
 	void createUser() throws Exception {
 		User user = new User("vcisneiros","123","Victor");
+		when(userService.save(any(User.class))).thenReturn(user);
 				
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userJSON = objectMapper.writeValueAsString(user);
 		
-		ResultActions result = mockMvc.perform(post("/user")
+		ResultActions result = mockMvc.perform(post("/utilizador")
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .content(userJSON));
 		
@@ -61,7 +62,6 @@ class UserControllerTest {
         .andExpect(jsonPath("$.username").value("vcisneiros"))
         .andExpect(jsonPath("$.password").value("123"))
 		.andExpect(jsonPath("$.name").value("Victor"));
-		
 		
 	}
 
