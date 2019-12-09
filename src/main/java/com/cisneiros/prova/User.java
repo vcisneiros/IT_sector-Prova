@@ -3,15 +3,24 @@ package com.cisneiros.prova;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class User {
 
-	private long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 	private String username;
 	private String nome;
 	private String password;
+	@CreatedDate
 	private Date createdAt;
+	@LastModifiedDate
 	private Date updatedAt;
 	
 	public User(String username, String password, String nome) {
@@ -22,10 +31,10 @@ public class User {
 		updatedAt = new Date();
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getUsername() {
