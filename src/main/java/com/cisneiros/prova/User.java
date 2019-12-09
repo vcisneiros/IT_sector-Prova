@@ -31,6 +31,8 @@ public class User {
 		updatedAt = new Date();
 	}
 	
+	public User(){};
+	
 	public Long getId() {
 		return id;
 	}
