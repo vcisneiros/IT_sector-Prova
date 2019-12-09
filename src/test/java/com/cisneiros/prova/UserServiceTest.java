@@ -2,9 +2,11 @@ package com.cisneiros.prova;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,5 +34,20 @@ public class UserServiceTest {
 		assertEquals(userBeforeSave.getUsername(), userAfterSave.getUsername());
 		assertEquals(userBeforeSave.getPassword(), userAfterSave.getPassword());
 		
+	}
+	
+	@Test
+	void saveUser() {
+		UserService userService = new UserService(userRepository);
+		User user = new User("vcisneiros", "123", "Victor");
+		User savedUser = userService.save(user);
+		assertFalse(userService.findAll().isEmpty());
+		assertNotNull(savedUser.getCreatedAt());
+		assertNotNull(savedUser.getUpdatedAt());
+	}
+	
+	@AfterEach
+	void clearData() {
+		userRepository.deleteAll();
 	}
 }
