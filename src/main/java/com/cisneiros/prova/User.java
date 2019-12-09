@@ -1,13 +1,13 @@
 package com.cisneiros.prova;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class User {
@@ -18,17 +18,15 @@ public class User {
 	private String username;
 	private String name;
 	private String password;
-	@CreatedDate
-	private Date createdAt;
-	@LastModifiedDate
-	private Date updatedAt;
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 	
 	public User(String username, String password, String name) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		createdAt = new Date();
-		updatedAt = new Date();
 	}
 	
 	public User(){};
@@ -57,16 +55,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-	public Date getUpdatedAt() {
+	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 }
