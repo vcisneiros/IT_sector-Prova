@@ -28,7 +28,7 @@ public class UserServiceTest {
 		
 		User userAfterSave = userList.get(userList.size()-1);
 		
-		assertEquals(userBeforeSave.getNome(), userAfterSave.getNome());
+		assertEquals(userBeforeSave.getName(), userAfterSave.getName());
 		assertEquals(userBeforeSave.getUsername(), userAfterSave.getUsername());
 		assertEquals(userBeforeSave.getPassword(), userAfterSave.getPassword());
 		

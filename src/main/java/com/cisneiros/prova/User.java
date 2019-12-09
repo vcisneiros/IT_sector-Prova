@@ -16,17 +16,17 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	private String username;
-	private String nome;
+	private String name;
 	private String password;
 	@CreatedDate
 	private Date createdAt;
 	@LastModifiedDate
 	private Date updatedAt;
 	
-	public User(String username, String password, String nome) {
+	public User(String username, String password, String name) {
 		this.username = username;
 		this.password = password;
-		this.nome = nome;
+		this.name = name;
 		createdAt = new Date();
 		updatedAt = new Date();
 	}
@@ -45,11 +45,11 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getPassword() {
 		return password;
