@@ -46,6 +46,18 @@ public class UserServiceTest {
 		assertNotNull(savedUser.getUpdatedAt());
 	}
 	
+	@Test
+	void findUser() {
+		UserService userService = new UserService(userRepository);
+		User user = new User("vcisneiros", "123", "Victor");
+		userService.save(user);
+		User userFound = userService.findUserById(1L);
+		
+		assertEquals(user.getId(), userFound.getId());
+		assertEquals(user.getUsername(), userFound.getUsername());
+		assertEquals(user.getName(), userFound.getName());
+	}
+	
 	@AfterEach
 	void clearData() {
 		userRepository.deleteAll();
