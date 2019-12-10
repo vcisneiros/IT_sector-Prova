@@ -56,7 +56,7 @@ class UserControllerTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userJSON = objectMapper.writeValueAsString(user);
 		
-		ResultActions result = mockMvc.perform(post("/utilizador")
+		ResultActions result = mockMvc.perform(post("/utilizadores")
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .content(userJSON));
 		
@@ -73,7 +73,7 @@ class UserControllerTest {
 		user.setId(1L);
 		when(userService.findUserById(any(Long.class))).thenReturn(user);
 						
-		mockMvc.perform(MockMvcRequestBuilders.get("/utilizador/1")
+		mockMvc.perform(MockMvcRequestBuilders.get("/utilizadores/1")
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$.id").value("1"))
 			.andExpect(jsonPath("$.username").value("vcisneiros"))
@@ -96,7 +96,7 @@ class UserControllerTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userJSON = objectMapper.writeValueAsString(changedUser);
 		
-		ResultActions result = mockMvc.perform(put("/utilizador")
+		ResultActions result = mockMvc.perform(put("/utilizadores")
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .content(userJSON));
 		
@@ -109,7 +109,7 @@ class UserControllerTest {
 		changedUser.setUsername("bad-user");
 		String badUserJSON = objectMapper.writeValueAsString(changedUser);
 		
-		ResultActions result2 = mockMvc.perform(put("/utilizador")
+		ResultActions result2 = mockMvc.perform(put("/utilizadores")
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .content(badUserJSON));
 		
@@ -125,7 +125,7 @@ class UserControllerTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userJSON = objectMapper.writeValueAsString(user);
 		
-		mockMvc.perform(delete("/utilizador")
+		mockMvc.perform(delete("/utilizadores")
 		        .contentType(MediaType.APPLICATION_JSON)
 		        .content(userJSON))
 				.andExpect(status().isOk());
