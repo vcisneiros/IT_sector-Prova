@@ -27,4 +27,8 @@ public class UserService {
 		return user.isPresent() ? user.get() : null;
 	}
 
+	public User update(User user) {
+		return new User();
+	}
+
 }

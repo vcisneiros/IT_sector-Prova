@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,6 +78,41 @@ class UserControllerTest {
 			.andExpect(jsonPath("$.username").value("vcisneiros"))
 			.andExpect(jsonPath("$.password").value("123"))
 			.andExpect(jsonPath("$.name").value("Victor"));
+		
+	}
+	
+	@Test
+	void updateUser() throws Exception {
+		User user = new User("vcisneiros","123","Victor");
+		user.setId(1L);
+		when(userService.findUserById(any(Long.class))).thenReturn(user);
+		
+		User changedUser = new User("vcisneiros","123456","Cisneiros");
+		changedUser.setId(1L);
+		
+		when(userService.update(any(User.class))).thenReturn(changedUser);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String userJSON = objectMapper.writeValueAsString(changedUser);
+		
+		ResultActions result = mockMvc.perform(put("/utilizador")
+		        .contentType(MediaType.APPLICATION_JSON)
+		        .content(userJSON));
+		
+		result.andExpect(status().isOk())
+			.andExpect(jsonPath("$.username").value("vcisneiros"))
+			.andExpect(jsonPath("$.name").value("Cisneiros"))
+			.andExpect(jsonPath("$.password").value("123456"))
+			.andExpect(jsonPath("$.id").value("1"));
+		
+		changedUser.setUsername("bad-user");
+		String badUserJSON = objectMapper.writeValueAsString(changedUser);
+		
+		ResultActions result2 = mockMvc.perform(put("/utilizador")
+		        .contentType(MediaType.APPLICATION_JSON)
+		        .content(badUserJSON));
+		
+		result2.andExpect(status().isBadRequest());
 		
 	}
 
