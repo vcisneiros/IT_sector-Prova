@@ -72,6 +72,18 @@ public class UserServiceTest {
 		
 	}
 	
+	@Test
+	void deleteUser() {
+		UserService userService = new UserService(userRepository);
+		User user1 = new User("vcisneiros", "123", "Victor");
+		User user2 = new User("maria", "123", "Maria");
+		userService.save(user1);
+		userService.save(user2);
+		
+		userService.delete(user2);
+		assertEquals(1, userService.findAll().size());
+	}
+	
 	@AfterEach
 	void clearData() {
 		userRepository.deleteAll();
