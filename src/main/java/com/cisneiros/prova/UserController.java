@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,5 +35,14 @@ public class UserController {
 			return new ResponseEntity<>(userFound, HttpStatus.OK);
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@PutMapping("/utilizador")
+	ResponseEntity<User> updateUser(@RequestBody User user) {
+		User userSaved = userService.findUserById(user.getId());
+		if (!userSaved.getUsername().equals(user.getUsername())) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
 	}
 }
