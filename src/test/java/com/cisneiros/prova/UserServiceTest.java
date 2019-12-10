@@ -57,6 +57,21 @@ public class UserServiceTest {
 		assertEquals(user.getName(), userFound.getName());
 	}
 	
+	@Test
+	void updateUser() {
+		UserService userService = new UserService(userRepository);
+		User user = new User("vcisneiros", "123", "Victor");
+		user = userService.save(user);
+		user.setName("Cisneiros");
+		user.setPassword("123456");
+		userService.update(user);
+		
+		User storegedUser = userService.findUserById(user.getId());
+		assertEquals(storegedUser.getName(), "Cisneiros");
+		assertEquals(storegedUser.getPassword(), "123456");
+		
+	}
+	
 	@AfterEach
 	void clearData() {
 		userRepository.deleteAll();
