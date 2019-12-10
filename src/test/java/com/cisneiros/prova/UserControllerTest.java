@@ -1,5 +1,13 @@
 package com.cisneiros.prova;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +23,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
@@ -70,10 +70,7 @@ class UserControllerTest {
 		User user = new User("vcisneiros","123","Victor");
 		user.setId(1L);
 		when(userService.findUserById(any(Long.class))).thenReturn(user);
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String userJSON = objectMapper.writeValueAsString(user);
-				
+						
 		mockMvc.perform(MockMvcRequestBuilders.get("/utilizador/1")
 			.contentType(MediaType.APPLICATION_JSON))
 			.andExpect(jsonPath("$.id").value("1"))

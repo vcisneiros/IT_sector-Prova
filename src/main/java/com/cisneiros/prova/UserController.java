@@ -29,6 +29,10 @@ public class UserController {
 
 	@GetMapping("/utilizador/{userId}")
 	ResponseEntity<User> getUser(@PathVariable Long userId) {
-	    return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
+		User userFound = userService.findUserById(userId);
+		if (userFound != null)
+			return new ResponseEntity<>(userFound, HttpStatus.OK);
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

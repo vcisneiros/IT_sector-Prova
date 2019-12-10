@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -51,7 +50,7 @@ public class UserServiceTest {
 		UserService userService = new UserService(userRepository);
 		User user = new User("vcisneiros", "123", "Victor");
 		userService.save(user);
-		User userFound = userService.findUserById(1L);
+		User userFound = userService.findUserById(2L);
 		
 		assertEquals(user.getId(), userFound.getId());
 		assertEquals(user.getUsername(), userFound.getUsername());

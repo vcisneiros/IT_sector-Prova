@@ -1,6 +1,7 @@
 package com.cisneiros.prova;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class UserService {
 	}
 
 	public User findUserById(Long id) {
-		return new User();
+		Optional<User> user = userRepository.findById(id);
+		return user.isPresent() ? user.get() : null;
 	}
 
 }
