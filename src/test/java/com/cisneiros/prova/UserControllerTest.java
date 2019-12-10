@@ -69,18 +69,16 @@ class UserControllerTest {
 	void getUser() throws Exception {
 		User user = new User("vcisneiros","123","Victor");
 		user.setId(1L);
-		when(userService.findUserById(1L)).thenReturn(user);
+		when(userService.findUserById(any(Long.class))).thenReturn(user);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String userJSON = objectMapper.writeValueAsString(user);
-		
-		ResultActions result = mockMvc.perform(post("/utilizador/1")
-		        .contentType(MediaType.APPLICATION_JSON)
-		        .content(userJSON));
-		
-		result.andExpect(jsonPath("$.id").value("1"))
+				
+		mockMvc.perform(MockMvcRequestBuilders.get("/utilizador/1")
+			.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(jsonPath("$.id").value("1"))
 			.andExpect(jsonPath("$.username").value("vcisneiros"))
-	        .andExpect(jsonPath("$.password").value("123"))
+			.andExpect(jsonPath("$.password").value("123"))
 			.andExpect(jsonPath("$.name").value("Victor"));
 		
 	}
