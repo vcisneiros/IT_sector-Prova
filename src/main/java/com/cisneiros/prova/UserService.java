@@ -28,7 +28,7 @@ public class UserService {
 	}
 
 	public User update(User user) {
-		return new User();
+		return userRepository.save(user);
 	}
 
 }
