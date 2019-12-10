@@ -3,6 +3,7 @@ package com.cisneiros.prova;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -114,6 +115,20 @@ class UserControllerTest {
 		
 		result2.andExpect(status().isBadRequest());
 		
+	}
+	
+	@Test
+	void deleteUser() throws Exception {		
+		User user = new User("vcisneiros","123","Victor");
+		user.setId(1L);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String userJSON = objectMapper.writeValueAsString(user);
+		
+		mockMvc.perform(delete("/utilizador")
+		        .contentType(MediaType.APPLICATION_JSON)
+		        .content(userJSON))
+				.andExpect(status().isOk());
 	}
 
 }
